@@ -173,8 +173,10 @@ export default function CurrencyPage() {
       const target = e.target as HTMLElement
       if (['INPUT', 'BUTTON'].includes(target.tagName)) return
       confetti({
-        particleCount: 50,
-        spread: 60,
+        particleCount: 150,
+        spread: 80,
+        shapes: ['circle', 'square', 'star'],
+        colors: ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff'],
         origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }
       })
     }
