@@ -429,28 +429,28 @@ export default function CurrencyPage() {
           onClick={() => setActiveTab(0)}
           style={{ flex: 1, whiteSpace: 'nowrap' }}
         >
-          Slide Show
+          Slide Show (幻灯片)
         </button>
         <button
           className={`glass-button ${activeTab === 1 ? 'active' : ''}`}
           onClick={() => setActiveTab(1)}
           style={{ flex: 1, whiteSpace: 'nowrap' }}
         >
-          Major Currencies
+          Major Currencies (主要货币)
         </button>
         <button
           className={`glass-button ${activeTab === 2 ? 'active' : ''}`}
           onClick={() => setActiveTab(2)}
           style={{ flex: 1, whiteSpace: 'nowrap' }}
         >
-          Low Value
+          Low Value (低价值)
         </button>
         <button
           className={`glass-button ${activeTab === 3 ? 'active' : ''}`}
           onClick={() => setActiveTab(3)}
           style={{ flex: 1, whiteSpace: 'nowrap' }}
         >
-          Crypto
+          Crypto (加密货币)
         </button>
       </div>
 
