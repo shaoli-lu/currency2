@@ -105,10 +105,26 @@ export default function CurrencyPage() {
       .catch(err => console.error(err))
 
     const fetchCrypto = () => {
+      const now = Date.now()
+      const cached = localStorage.getItem('cryptoDataCache')
+      const cacheTime = localStorage.getItem('cryptoDataTime')
+
+      // Check if cache exists and is less than 5 minutes (300000 ms) old
+      if (cached && cacheTime && now - parseInt(cacheTime) < 300000) {
+        const data = JSON.parse(cached)
+        setCryptoData(data)
+        if (data.length > 0 && data[0].last_updated) {
+          setCryptoDate(new Date(data[0].last_updated).toLocaleString('en-US'))
+        }
+        return
+      }
+
       fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1')
         .then(res => res.json())
         .then(data => {
           if (Array.isArray(data)) {
+            localStorage.setItem('cryptoDataCache', JSON.stringify(data))
+            localStorage.setItem('cryptoDataTime', now.toString())
             setCryptoData(data)
             if (data.length > 0 && data[0].last_updated) {
               setCryptoDate(new Date(data[0].last_updated).toLocaleString('en-US'))
@@ -119,7 +135,7 @@ export default function CurrencyPage() {
     }
 
     fetchCrypto()
-    const cryptoInterval = setInterval(fetchCrypto, 10000) // Poll crypto every 10 seconds realtime
+    const cryptoInterval = setInterval(fetchCrypto, 300000) // Poll crypto every 5 minutes
 
     return () => clearInterval(cryptoInterval)
   }, [])
