@@ -290,6 +290,15 @@ export default function CurrencyPage() {
 
   const renderCryptoList = (list: any[]) => {
     if (list.length === 0) return <p>No cryptocoins found</p>
+
+    const formatMarketCap = (num: number) => {
+      if (!num) return '0'
+      if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T'
+      if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B'
+      if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M'
+      return num.toLocaleString('en-US')
+    }
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {list.map(c => (
@@ -299,6 +308,9 @@ export default function CurrencyPage() {
               <div>
                 <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{c.name}</div>
                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{c.symbol}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                  MarketCap: ${formatMarketCap(c.market_cap)}
+                </div>
               </div>
             </div>
             <div style={{ textAlign: 'right' }}>
