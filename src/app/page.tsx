@@ -229,7 +229,7 @@ export default function CurrencyPage() {
     const handleClick = (e: MouseEvent) => {
       // Prevent confetti when clicking interactable elements like buttons/inputs
       const target = e.target as HTMLElement
-      if (['INPUT', 'BUTTON'].includes(target.tagName)) return
+      if (target.closest && target.closest('input, button, [role="button"]')) return
       confetti({
         particleCount: 150,
         spread: 80,
@@ -277,7 +277,8 @@ export default function CurrencyPage() {
 
   const renderSlideshow = () => {
     if (sortedMajor.length === 0) return <p>No currencies found</p>
-    const currentSlide = sortedMajor[slideIndex]
+    const safeSlideIndex = slideIndex >= sortedMajor.length ? 0 : slideIndex
+    const currentSlide = sortedMajor[safeSlideIndex]
 
     return (
       <div
@@ -312,7 +313,7 @@ export default function CurrencyPage() {
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                background: i === slideIndex ? 'var(--accent)' : 'var(--border-light)',
+                background: i === safeSlideIndex ? 'var(--accent)' : 'var(--border-light)',
                 transition: 'background 0.3s'
               }}
             />
