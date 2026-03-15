@@ -126,6 +126,17 @@ function getCryptoName(symbol: string, name: string) {
   return zh ? `${name} (${zh})` : name
 }
 
+function getCurrencySymbol(code: string) {
+  try {
+    const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: code })
+    const parts = formatter.formatToParts(0)
+    const symbolPart = parts.find(part => part.type === 'currency')
+    return symbolPart ? symbolPart.value : code
+  } catch (e) {
+    return code
+  }
+}
+
 export default function CurrencyPage() {
   const [rates, setRates] = useState<Record<string, number>>({})
   const [cryptoData, setCryptoData] = useState<any[]>([])
@@ -285,7 +296,7 @@ export default function CurrencyPage() {
         </div>
         
         <h2 style={{ fontSize: '2rem', marginBottom: '10px' }}>{currentSlide.name}</h2>
-        <h3 style={{ fontSize: '1.5rem', color: 'var(--accent)', marginBottom: '5px' }}>{currentSlide.code}</h3>
+        <h3 style={{ fontSize: '1.5rem', color: 'var(--accent)', marginBottom: '5px' }}>{currentSlide.code} ({getCurrencySymbol(currentSlide.code)})</h3>
         <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
           {currentSlide.rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </p>
@@ -323,7 +334,7 @@ export default function CurrencyPage() {
               )}
               <div>
                 <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{c.name}</div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{c.code}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{c.code} ({getCurrencySymbol(c.code)})</div>
               </div>
             </div>
             <div style={{ textAlign: 'right', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--text-main)' }}>
