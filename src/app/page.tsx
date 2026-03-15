@@ -70,6 +70,7 @@ const currencyMap: Record<string, {name: string, importance: number}> = {
   BHD: { name: 'Bahraini Dinar (巴林第纳尔)', importance: 64 },
   JOD: { name: 'Jordanian Dinar (约旦第纳尔)', importance: 65 },
   LBP: { name: 'Lebanese Pound (黎巴嫩镑)', importance: 66 },
+  XOF: { name: 'West African CFA franc (西非法郎)', importance: 67 },
   USD: { name: 'US Dollar (美元)', importance: 0 }
 }
 
@@ -217,6 +218,7 @@ export default function CurrencyPage() {
         if (flagMap['EUR']) flagMap['EUR'] = 'https://flagcdn.com/w320/eu.png'
         if (flagMap['GBP']) flagMap['GBP'] = 'https://flagcdn.com/w320/gb.png'
         if (flagMap['AUD']) flagMap['AUD'] = 'https://flagcdn.com/w320/au.png'
+        if (flagMap['XOF']) flagMap['XOF'] = 'https://flagcdn.com/w320/ci.png'
         setFlags(flagMap)
       })
       .catch(err => console.error(err))
