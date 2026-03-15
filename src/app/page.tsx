@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import confetti from 'canvas-confetti'
 
-const currencyMap: Record<string, {name: string, importance: number}> = {
+const currencyMap: Record<string, { name: string, importance: number }> = {
   CNY: { name: 'Chinese Yuan (人民币)', importance: 1 },
   EUR: { name: 'Euro (欧元)', importance: 2 },
   JPY: { name: 'Japanese Yen (日元)', importance: 3 },
@@ -249,13 +249,13 @@ export default function CurrencyPage() {
     importance: getCurrencyImportance(code)
   }))
 
-  const filteredCurrencies = currencies.filter(c => 
-    c.name.toLowerCase().includes(search.toLowerCase()) || 
+  const filteredCurrencies = currencies.filter(c =>
+    c.name.toLowerCase().includes(search.toLowerCase()) ||
     c.code.toLowerCase().includes(search.toLowerCase())
   )
 
-  const filteredCrypto = cryptoData.filter(c => 
-    c.name.toLowerCase().includes(search.toLowerCase()) || 
+  const filteredCrypto = cryptoData.filter(c =>
+    c.name.toLowerCase().includes(search.toLowerCase()) ||
     c.symbol.toLowerCase().includes(search.toLowerCase())
   )
 
@@ -280,15 +280,15 @@ export default function CurrencyPage() {
     const currentSlide = sortedMajor[slideIndex]
 
     return (
-      <div 
-        className="glass-panel" 
+      <div
+        className="glass-panel"
         style={{ padding: '40px 20px', textAlign: 'center', cursor: 'pointer', position: 'relative' }}
         onClick={() => setPaused(!paused)}
       >
         <div style={{ position: 'absolute', top: 15, right: 20, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
           {paused ? '⏸ Paused' : '▶ Playing'}
         </div>
-        
+
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
           {flags[currentSlide.code] ? (
             <img src={flags[currentSlide.code]} alt={currentSlide.code} style={{ width: '80px', height: '54px', objectFit: 'cover', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }} />
@@ -296,22 +296,22 @@ export default function CurrencyPage() {
             <div style={{ width: '80px', height: '54px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.1)', borderRadius: '8px', fontSize: '18px' }}>{currentSlide.code}</div>
           )}
         </div>
-        
+
         <h2 style={{ fontSize: '2rem', marginBottom: '10px' }}>{currentSlide.name}</h2>
         <h3 style={{ fontSize: '1.5rem', color: 'var(--accent)', marginBottom: '5px' }}>{currentSlide.code} ({getCurrencySymbol(currentSlide.code)})</h3>
         <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
           {currentSlide.rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </p>
         <p style={{ color: 'var(--text-muted)', marginTop: '10px' }}>Relative to 1 USD</p>
-        
+
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', gap: '5px', flexWrap: 'wrap' }}>
           {sortedMajor.map((_, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               style={{
-                width: '8px', 
-                height: '8px', 
-                borderRadius: '50%', 
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
                 background: i === slideIndex ? 'var(--accent)' : 'var(--border-light)',
                 transition: 'background 0.3s'
               }}
@@ -391,17 +391,17 @@ export default function CurrencyPage() {
   return (
     <div style={{ padding: '30px 20px', maxWidth: '800px', margin: '0 auto' }}>
       <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <img 
-          src="/logo.png" 
-          alt="World Currency Logo" 
-          style={{ 
-            width: '120px', 
-            height: '120px', 
-            borderRadius: '50%', 
-            marginBottom: '20px', 
+        <img
+          src="/logo.png"
+          alt="World Currency Logo"
+          style={{
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            marginBottom: '20px',
             boxShadow: '0 0 25px var(--accent-glow)',
             objectFit: 'cover'
-          }} 
+          }}
         />
         <h1 style={{ fontSize: '2.5rem', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>World Currency (世界货币)</h1>
         <p style={{ fontSize: '1.2rem', color: 'var(--accent)', marginBottom: '5px' }}>
@@ -413,39 +413,39 @@ export default function CurrencyPage() {
       </header>
 
       <div style={{ marginBottom: '30px' }}>
-        <input 
-          type="text" 
-          className="glass-input" 
-          placeholder="Search by country or currency name..." 
+        <input
+          type="text"
+          className="glass-input"
+          placeholder="Search (搜索)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', overflowX: 'auto', paddingBottom: '10px' }}>
-        <button 
-          className={`glass-button ${activeTab === 0 ? 'active' : ''}`} 
+        <button
+          className={`glass-button ${activeTab === 0 ? 'active' : ''}`}
           onClick={() => setActiveTab(0)}
           style={{ flex: 1, whiteSpace: 'nowrap' }}
         >
           Slide Show
         </button>
-        <button 
-          className={`glass-button ${activeTab === 1 ? 'active' : ''}`} 
+        <button
+          className={`glass-button ${activeTab === 1 ? 'active' : ''}`}
           onClick={() => setActiveTab(1)}
           style={{ flex: 1, whiteSpace: 'nowrap' }}
         >
           Major Currencies
         </button>
-        <button 
-          className={`glass-button ${activeTab === 2 ? 'active' : ''}`} 
+        <button
+          className={`glass-button ${activeTab === 2 ? 'active' : ''}`}
           onClick={() => setActiveTab(2)}
           style={{ flex: 1, whiteSpace: 'nowrap' }}
         >
           Low Value
         </button>
-        <button 
-          className={`glass-button ${activeTab === 3 ? 'active' : ''}`} 
+        <button
+          className={`glass-button ${activeTab === 3 ? 'active' : ''}`}
           onClick={() => setActiveTab(3)}
           style={{ flex: 1, whiteSpace: 'nowrap' }}
         >
