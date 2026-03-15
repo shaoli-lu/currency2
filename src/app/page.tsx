@@ -243,8 +243,14 @@ export default function CurrencyPage() {
                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{c.symbol}</div>
               </div>
             </div>
-            <div style={{ textAlign: 'right', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--text-main)' }}>
-              ${c.current_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--text-main)' }}>
+                ${c.current_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
+              </div>
+              <div style={{ fontSize: '0.85rem', color: c.price_change_percentage_24h >= 0 ? '#10b981' : '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px', marginTop: '2px' }}>
+                {c.price_change_percentage_24h >= 0 ? '▲' : '▼'}
+                {Math.abs(c.price_change_percentage_24h).toFixed(2)}% (24h)
+              </div>
             </div>
           </div>
         ))}
