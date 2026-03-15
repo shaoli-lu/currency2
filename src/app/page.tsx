@@ -83,8 +83,10 @@ function getCurrencyImportance(code: string) {
 
 export default function CurrencyPage() {
   const [rates, setRates] = useState<Record<string, number>>({})
+  const [cryptoData, setCryptoData] = useState<any[]>([])
   const [date, setDate] = useState('')
-  const [activeTab, setActiveTab] = useState(0) // 0: Slideshow, 1: Major, 2: Low Value
+  const [cryptoDate, setCryptoDate] = useState('')
+  const [activeTab, setActiveTab] = useState(0) // 0: Slideshow, 1: Major, 2: Low Value, 3: Crypto
   const [search, setSearch] = useState('')
   const [paused, setPaused] = useState(false)
   const [slideIndex, setSlideIndex] = useState(0)
@@ -101,6 +103,25 @@ export default function CurrencyPage() {
         }
       })
       .catch(err => console.error(err))
+
+    const fetchCrypto = () => {
+      fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            setCryptoData(data)
+            if (data.length > 0 && data[0].last_updated) {
+              setCryptoDate(new Date(data[0].last_updated).toLocaleString('en-US'))
+            }
+          }
+        })
+        .catch(err => console.error(err))
+    }
+
+    fetchCrypto()
+    const cryptoInterval = setInterval(fetchCrypto, 10000) // Poll crypto every 10 seconds realtime
+
+    return () => clearInterval(cryptoInterval)
   }, [])
 
   // Handle Confetti
@@ -129,6 +150,11 @@ export default function CurrencyPage() {
   const filteredCurrencies = currencies.filter(c => 
     c.name.toLowerCase().includes(search.toLowerCase()) || 
     c.code.toLowerCase().includes(search.toLowerCase())
+  )
+
+  const filteredCrypto = cryptoData.filter(c => 
+    c.name.toLowerCase().includes(search.toLowerCase()) || 
+    c.symbol.toLowerCase().includes(search.toLowerCase())
   )
 
   const sortedMajor = [...filteredCurrencies].sort((a, b) => a.importance - b.importance)
@@ -204,6 +230,28 @@ export default function CurrencyPage() {
     )
   }
 
+  const renderCryptoList = (list: any[]) => {
+    if (list.length === 0) return <p>No cryptocoins found</p>
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {list.map(c => (
+          <div key={c.id} className="glass-panel" style={{ padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <img src={c.image} alt={c.name} style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
+              <div>
+                <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{c.name}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{c.symbol}</div>
+              </div>
+            </div>
+            <div style={{ textAlign: 'right', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--text-main)' }}>
+              ${c.current_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   return (
     <div style={{ padding: '30px 20px', maxWidth: '800px', margin: '0 auto' }}>
       <header style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -220,8 +268,12 @@ export default function CurrencyPage() {
           }} 
         />
         <h1 style={{ fontSize: '2.5rem', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>World Currency</h1>
-        <p style={{ fontSize: '1.2rem', color: 'var(--accent)', marginBottom: '5px' }}>1 USD to other currencies</p>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>As of: {date || 'Loading...'}</p>
+        <p style={{ fontSize: '1.2rem', color: 'var(--accent)', marginBottom: '5px' }}>
+          {activeTab === 3 ? '1 Crypto to USD' : '1 USD to other currencies'}
+        </p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+          As of: {activeTab === 3 ? (cryptoDate || 'Loading...') : (date || 'Loading...')}
+        </p>
       </header>
 
       <div style={{ marginBottom: '30px' }}>
@@ -256,12 +308,20 @@ export default function CurrencyPage() {
         >
           Low Value
         </button>
+        <button 
+          className={`glass-button ${activeTab === 3 ? 'active' : ''}`} 
+          onClick={() => setActiveTab(3)}
+          style={{ flex: 1, whiteSpace: 'nowrap' }}
+        >
+          Crypto
+        </button>
       </div>
 
       <main>
         {activeTab === 0 && renderSlideshow()}
         {activeTab === 1 && renderList(sortedMajor)}
         {activeTab === 2 && renderList(sortedLowValue)}
+        {activeTab === 3 && renderCryptoList(filteredCrypto)}
       </main>
     </div>
   )
