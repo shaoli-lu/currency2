@@ -86,6 +86,7 @@ export default function CurrencyPage() {
   const [cryptoData, setCryptoData] = useState<any[]>([])
   const [date, setDate] = useState('')
   const [cryptoDate, setCryptoDate] = useState('')
+  const [flags, setFlags] = useState<Record<string, string>>({})
   const [activeTab, setActiveTab] = useState(0) // 0: Slideshow, 1: Major, 2: Low Value, 3: Crypto
   const [search, setSearch] = useState('')
   const [paused, setPaused] = useState(false)
@@ -138,6 +139,31 @@ export default function CurrencyPage() {
     const cryptoInterval = setInterval(fetchCrypto, 300000) // Poll crypto every 5 minutes
 
     return () => clearInterval(cryptoInterval)
+  }, [])
+
+  // Fetch Country Flags
+  useEffect(() => {
+    fetch('https://restcountries.com/v3.1/all?fields=currencies,flags')
+      .then(res => res.json())
+      .then(data => {
+        const flagMap: Record<string, string> = {}
+        data.forEach((country: any) => {
+          if (country.currencies && country.flags && country.flags.png) {
+            Object.keys(country.currencies).forEach(code => {
+              if (!flagMap[code]) {
+                flagMap[code] = country.flags.png
+              }
+            })
+          }
+        })
+        // Overrides for common multi-country currencies to ensure primary flag
+        if (flagMap['USD']) flagMap['USD'] = 'https://flagcdn.com/w320/us.png'
+        if (flagMap['EUR']) flagMap['EUR'] = 'https://flagcdn.com/w320/eu.png'
+        if (flagMap['GBP']) flagMap['GBP'] = 'https://flagcdn.com/w320/gb.png'
+        if (flagMap['AUD']) flagMap['AUD'] = 'https://flagcdn.com/w320/au.png'
+        setFlags(flagMap)
+      })
+      .catch(err => console.error(err))
   }, [])
 
   // Handle Confetti
@@ -202,6 +228,15 @@ export default function CurrencyPage() {
         <div style={{ position: 'absolute', top: 15, right: 20, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
           {paused ? '⏸ Paused' : '▶ Playing'} (Click to toggle)
         </div>
+        
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
+          {flags[currentSlide.code] ? (
+            <img src={flags[currentSlide.code]} alt={currentSlide.code} style={{ width: '80px', height: '54px', objectFit: 'cover', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }} />
+          ) : (
+            <div style={{ width: '80px', height: '54px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.1)', borderRadius: '8px', fontSize: '18px' }}>{currentSlide.code}</div>
+          )}
+        </div>
+        
         <h2 style={{ fontSize: '2rem', marginBottom: '10px' }}>{currentSlide.name}</h2>
         <h3 style={{ fontSize: '1.5rem', color: 'var(--accent)', marginBottom: '5px' }}>{currentSlide.code}</h3>
         <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
@@ -233,9 +268,16 @@ export default function CurrencyPage() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {list.map(c => (
           <div key={c.code} className="glass-panel" style={{ padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{c.name}</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{c.code}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              {flags[c.code] ? (
+                <img src={flags[c.code]} alt={c.code} style={{ width: '45px', height: '30px', objectFit: 'cover', borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }} />
+              ) : (
+                <div style={{ width: '45px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '12px' }}>{c.code}</div>
+              )}
+              <div>
+                <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{c.name}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{c.code}</div>
+              </div>
             </div>
             <div style={{ textAlign: 'right', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--text-main)' }}>
               {c.rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
