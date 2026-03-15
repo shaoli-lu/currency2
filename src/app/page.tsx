@@ -225,8 +225,8 @@ export default function CurrencyPage() {
         style={{ padding: '40px 20px', textAlign: 'center', cursor: 'pointer', position: 'relative' }}
         onClick={() => setPaused(!paused)}
       >
-        <div style={{ position: 'absolute', top: 15, right: 20, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-          {paused ? '⏸ Paused' : '▶ Playing'} (Click to toggle)
+        <div style={{ position: 'absolute', bottom: 15, right: 20, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+          {paused ? '⏸ Paused' : '▶ Playing'}
         </div>
         
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
