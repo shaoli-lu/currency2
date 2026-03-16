@@ -390,7 +390,33 @@ export default function CurrencyPage() {
   }
 
   return (
-    <div style={{ padding: '30px 20px', maxWidth: '800px', margin: '0 auto' }}>
+    <div style={{ padding: '30px 20px', maxWidth: '800px', margin: '0 auto', position: 'relative' }}>
+      <div className="search-container">
+        <div className="search-wrapper">
+          <input
+            type="text"
+            className="glass-input"
+            placeholder="Search (搜索)..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            className="search-icon"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+      </div>
       <header style={{ textAlign: 'center', marginBottom: '40px' }}>
         <img
           src="/logo.png"
@@ -413,15 +439,6 @@ export default function CurrencyPage() {
         </p>
       </header>
 
-      <div style={{ marginBottom: '30px' }}>
-        <input
-          type="text"
-          className="glass-input"
-          placeholder="Search (搜索)..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', overflowX: 'auto', paddingBottom: '10px' }}>
         <button
