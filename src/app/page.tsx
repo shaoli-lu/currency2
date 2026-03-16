@@ -276,7 +276,22 @@ export default function CurrencyPage() {
   }, [search])
 
   const renderSlideshow = () => {
-    if (sortedMajor.length === 0) return <p>No currencies found</p>
+    if (Object.keys(rates).length === 0) {
+      return (
+        <div className="glass-panel" style={{ padding: '60px 20px', textAlign: 'center' }}>
+          <div className="loading-spinner"></div>
+          <p style={{ color: 'var(--text-muted)' }}>Loading Currency Data (加载中)...</p>
+        </div>
+      )
+    }
+
+    if (sortedMajor.length === 0) {
+      return (
+        <div className="glass-panel" style={{ padding: '60px 20px', textAlign: 'center' }}>
+          <p>No currencies found matching "{search}" (未找到货币)</p>
+        </div>
+      )
+    }
     const safeSlideIndex = slideIndex >= sortedMajor.length ? 0 : slideIndex
     const currentSlide = sortedMajor[safeSlideIndex]
 
@@ -324,7 +339,16 @@ export default function CurrencyPage() {
   }
 
   const renderList = (list: typeof sortedMajor) => {
-    if (list.length === 0) return <p>No currencies found</p>
+    if (Object.keys(rates).length === 0) {
+      return (
+        <div className="glass-panel" style={{ padding: '40px', textAlign: 'center' }}>
+          <div className="loading-spinner"></div>
+          <p style={{ color: 'var(--text-muted)' }}>Loading List (加载中)...</p>
+        </div>
+      )
+    }
+
+    if (list.length === 0) return <p style={{ textAlign: 'center', padding: '20px' }}>No currencies found matching "{search}" (未找到货币)</p>
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {list.map(c => (
@@ -350,7 +374,16 @@ export default function CurrencyPage() {
   }
 
   const renderCryptoList = (list: any[]) => {
-    if (list.length === 0) return <p>No cryptocoins found</p>
+    if (cryptoData.length === 0) {
+      return (
+        <div className="glass-panel" style={{ padding: '40px', textAlign: 'center' }}>
+          <div className="loading-spinner"></div>
+          <p style={{ color: 'var(--text-muted)' }}>Loading Crypto Market Data (加载中)...</p>
+        </div>
+      )
+    }
+
+    if (list.length === 0) return <p style={{ textAlign: 'center', padding: '20px' }}>No cryptocoins found matching "{search}" (未找到加密货币)</p>
 
     const formatMarketCap = (num: number) => {
       if (!num) return '0'
