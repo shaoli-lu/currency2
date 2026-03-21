@@ -288,7 +288,7 @@ export default function CurrencyPage() {
     if (sortedMajor.length === 0) {
       return (
         <div className="glass-panel" style={{ padding: '60px 20px', textAlign: 'center' }}>
-          <p>No currencies found matching "{search}" (未找到货币)</p>
+          <p>No currencies found matching &quot;{search}&quot; (未找到货币)</p>
         </div>
       )
     }
@@ -348,7 +348,7 @@ export default function CurrencyPage() {
       )
     }
 
-    if (list.length === 0) return <p style={{ textAlign: 'center', padding: '20px' }}>No currencies found matching "{search}" (未找到货币)</p>
+    if (list.length === 0) return <p style={{ textAlign: 'center', padding: '20px' }}>No currencies found matching &quot;{search}&quot; (未找到货币)</p>
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {list.map(c => (
@@ -395,7 +395,7 @@ export default function CurrencyPage() {
     const totalCount = cryptoData.length
     const displayedCount = list.length
 
-    if (list.length === 0) return <p style={{ textAlign: 'center', padding: '20px' }}>No cryptocoins found matching "{search}" (未找到加密货币)</p>
+    if (list.length === 0) return <p style={{ textAlign: 'center', padding: '20px' }}>No cryptocoins found matching &quot;{search}&quot; (未找到加密货币)</p>
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
