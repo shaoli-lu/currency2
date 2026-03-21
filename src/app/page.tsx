@@ -383,8 +383,6 @@ export default function CurrencyPage() {
       )
     }
 
-    if (list.length === 0) return <p style={{ textAlign: 'center', padding: '20px' }}>No cryptocoins found matching "{search}" (未找到加密货币)</p>
-
     const formatMarketCap = (num: number) => {
       if (!num) return '0'
       if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T'
@@ -393,17 +391,49 @@ export default function CurrencyPage() {
       return num.toLocaleString('en-US')
     }
 
+    const totalMarketCap = cryptoData.reduce((sum, c) => sum + (c.market_cap || 0), 0)
+    const totalCount = cryptoData.length
+    const displayedCount = list.length
+
+    if (list.length === 0) return <p style={{ textAlign: 'center', padding: '20px' }}>No cryptocoins found matching "{search}" (未找到加密货币)</p>
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {/* Stats Section */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: '1fr 1fr', 
+          gap: '12px', 
+          marginBottom: '20px' 
+        }}>
+          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', borderBottom: '3px solid var(--accent)' }}>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
+              Total Count (总数)
+            </div>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--text-main)' }}>
+              {search ? `${displayedCount} / ${totalCount}` : totalCount}
+            </div>
+          </div>
+          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', borderBottom: '3px solid var(--accent)' }}>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
+              Tot. Market Cap (总市值)
+            </div>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--accent)' }}>
+              ${formatMarketCap(totalMarketCap)}
+            </div>
+          </div>
+        </div>
+
+        {/* List items */}
         {list.map(c => (
-          <div key={c.id} className="glass-panel" style={{ padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div key={c.id} className="glass-panel" style={{ padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'transform 0.2s' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <img src={c.image} alt={c.name} style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
+              <img src={c.image} alt={c.name} style={{ width: '40px', height: '40px', borderRadius: '50%', boxShadow: '0 0 10px rgba(0,0,0,0.5)' }} />
               <div>
                 <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{getCryptoName(c.symbol, c.name)}</div>
                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{c.symbol}</div>
                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                  MarketCap: ${formatMarketCap(c.market_cap)}
+                  MCap: ${formatMarketCap(c.market_cap)}
                 </div>
               </div>
             </div>
