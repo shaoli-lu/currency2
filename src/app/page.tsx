@@ -524,7 +524,7 @@ export default function CurrencyPage() {
           </div>
           <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', borderBottom: '3px solid var(--accent)' }}>
             <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
-              Tot. Market Cap (总市值)
+              Total Market Cap (总市值)
             </div>
             <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--accent)' }}>
               ${formatMarketCap(totalMarketCap)}
@@ -541,7 +541,7 @@ export default function CurrencyPage() {
                 <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{getCryptoName(c.symbol, c.name)}</div>
                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{c.symbol}</div>
                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                  MCap: ${formatMarketCap(c.market_cap)}
+                  Market Cap: ${formatMarketCap(c.market_cap)}
                 </div>
               </div>
             </div>
