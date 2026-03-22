@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import confetti from 'canvas-confetti'
 
 const currencyMap: Record<string, { name: string, importance: number }> = {
+  // Major & Existing
   CNY: { name: 'Chinese Yuan (人民币)', importance: 1 },
   EUR: { name: 'Euro (欧元)', importance: 2 },
   JPY: { name: 'Japanese Yen (日元)', importance: 3 },
@@ -71,11 +72,115 @@ const currencyMap: Record<string, { name: string, importance: number }> = {
   JOD: { name: 'Jordanian Dinar (约旦第纳尔)', importance: 65 },
   LBP: { name: 'Lebanese Pound (黎巴嫩镑)', importance: 66 },
   XOF: { name: 'West African CFA franc (西非法郎)', importance: 67 },
-  USD: { name: 'US Dollar (美元)', importance: 0 }
+  AFN: { name: 'Afghan Afghani (阿富汗尼)', importance: 68 },
+  USD: { name: 'US Dollar (美元)', importance: 0 },
+
+  // Expanded coverage
+  AMD: { name: 'Armenian Dram (亚美尼亚德拉姆)', importance: 100 },
+  ANG: { name: 'Netherlands Antillean Guilder (荷属安的列斯盾)', importance: 101 },
+  AOA: { name: 'Angolan Kwanza (安哥拉宽扎)', importance: 102 },
+  AWG: { name: 'Aruban Florin (阿鲁巴弗罗林)', importance: 103 },
+  AZN: { name: 'Azerbaijani Manat (阿塞拜疆马纳特)', importance: 104 },
+  BAM: { name: 'Bosnia-Herzegovina Convertible Mark (波黑可兑换马克)', importance: 105 },
+  BBD: { name: 'Barbadian Dollar (巴巴多斯元)', importance: 106 },
+  BIF: { name: 'Burundian Franc (布隆迪法郎)', importance: 107 },
+  BMD: { name: 'Bermudian Dollar (百慕大元)', importance: 108 },
+  BND: { name: 'Brunei Dollar (文莱元)', importance: 109 },
+  BOB: { name: 'Bolivian Boliviano (玻利维亚诺)', importance: 110 },
+  BSD: { name: 'Bahamian Dollar (巴哈马元)', importance: 111 },
+  BTN: { name: 'Bhutanese Ngultrum (不丹努尔特鲁姆)', importance: 112 },
+  BWP: { name: 'Botswana Pula (博茨瓦纳普拉)', importance: 113 },
+  BYN: { name: 'Belarusian Ruble (白俄罗斯卢布)', importance: 114 },
+  BZD: { name: 'Belize Dollar (伯利兹元)', importance: 115 },
+  CDF: { name: 'Congolese Franc (刚果法郎)', importance: 116 },
+  CVE: { name: 'Cape Verdean Escudo (佛得角埃斯库多)', importance: 117 },
+  DJF: { name: 'Djiboutian Franc (吉布提法郎)', importance: 118 },
+  DOP: { name: 'Dominican Peso (多米尼加比索)', importance: 119 },
+  ERN: { name: 'Eritrean Nakfa (厄立特里亚纳克法)', importance: 120 },
+  ETB: { name: 'Ethiopian Birr (埃塞俄比亚比尔)', importance: 121 },
+  FOK: { name: 'Faroese Króna (法罗群岛克朗)', importance: 122 },
+  GEL: { name: 'Georgian Lari (格鲁吉亚拉里)', importance: 123 },
+  GGP: { name: 'Guernsey Pound (根西岛镑)', importance: 124 },
+  GHS: { name: 'Ghanaian Cedi (加纳塞地)', importance: 125 },
+  GIP: { name: 'Gibraltar Pound (直布罗陀镑)', importance: 126 },
+  GMD: { name: 'Gambian Dalasi (甘比亚达拉西)', importance: 127 },
+  GNF: { name: 'Guinean Franc (几内亚法郎)', importance: 128 },
+  GYD: { name: 'Guyanese Dollar (圭亚那元)', importance: 129 },
+  HNL: { name: 'Honduran Lempira (洪都拉斯伦皮拉)', importance: 130 },
+  ISK: { name: 'Icelandic Króna (冰岛克朗)', importance: 131 },
+  JEP: { name: 'Jersey Pound (泽西岛镑)', importance: 132 },
+  KGS: { name: 'Kyrgyzstani Som (吉尔吉斯斯坦索姆)', importance: 133 },
+  KID: { name: 'Kiribati Dollar (基里巴斯元)', importance: 134 },
+  KMF: { name: 'Comorian Franc (科摩罗法郎)', importance: 135 },
+  KPW: { name: 'North Korean Won (朝鲜元)', importance: 136 },
+  KYD: { name: 'Cayman Islands Dollar (开曼群岛元)', importance: 137 },
+  KZT: { name: 'Kazakhstani Tenge (哈萨克斯坦坚戈)', importance: 138 },
+  LKR: { name: 'Sri Lankan Rupee (斯里兰卡卢比)', importance: 139 },
+  LRD: { name: 'Liberian Dollar (利比里亚元)', importance: 140 },
+  LSL: { name: 'Lesotho Loti (莱索托洛蒂)', importance: 141 },
+  LYD: { name: 'Libyan Dinar (利比亚第纳尔)', importance: 142 },
+  MDL: { name: 'Moldovan Leu (摩尔多瓦列伊)', importance: 143 },
+  MGA: { name: 'Malagasy Ariary (马达加斯加阿里亚里)', importance: 144 },
+  MKD: { name: 'Macedonian Denar (马其顿第纳尔)', importance: 145 },
+  MNT: { name: 'Mongolian Tögrög (蒙古图格里克)', importance: 146 },
+  MOP: { name: 'Macanese Pataca (澳门元)', importance: 147 },
+  MRU: { name: 'Mauritanian Ouguiya (毛里塔尼亚乌吉亚)', importance: 148 },
+  MUR: { name: 'Mauritian Rupee (毛里求斯卢比)', importance: 149 },
+  MWK: { name: 'Malawian Kwacha (马拉维克瓦查)', importance: 150 },
+  MZN: { name: 'Mozambican Metical (莫桑比克梅蒂卡尔)', importance: 151 },
+  NAD: { name: 'Namibian Dollar (纳米比亚元)', importance: 152 },
+  PAB: { name: 'Panamanian Balboa (巴拿马巴波亚)', importance: 153 },
+  PEN: { name: 'Peruvian Sol (秘鲁索尔)', importance: 154 },
+  PGK: { name: 'Papua New Guinean Kina (巴布亚新几内亚基那)', importance: 155 },
+  PYG: { name: 'Paraguayan Guaraní (巴拉圭瓜拉尼)', importance: 156 },
+  RSD: { name: 'Serbian Dinar (塞尔维亚第纳尔)', importance: 157 },
+  RWF: { name: 'Rwandan Franc (卢旺达法郎)', importance: 158 },
+  SBD: { name: 'Solomon Islands Dollar (所罗门群岛元)', importance: 159 },
+  SCR: { name: 'Seychellois Rupee (塞舌尔卢比)', importance: 160 },
+  SDG: { name: 'Sudanese Pound (苏丹镑)', importance: 161 },
+  SHP: { name: 'Saint Helena Pound (圣赫勒拿镑)', importance: 162 },
+  SLE: { name: 'Sierra Leonean Leone (塞拉利昂利昂)', importance: 163 },
+  SLL: { name: 'Sierra Leonean Leone (old) (旧塞拉利昂利昂)', importance: 164 },
+  SOS: { name: 'Somali Shilling (索马里先令)', importance: 165 },
+  SRD: { name: 'Surinamese Dollar (苏里南元)', importance: 166 },
+  SSP: { name: 'South Sudanese Pound (南苏丹镑)', importance: 167 },
+  STN: { name: 'São Tomé and Príncipe Dobra (圣多美和普林西比多布拉)', importance: 168 },
+  SYP: { name: 'Syrian Pound (叙利亚镑)', importance: 169 },
+  SZL: { name: 'Swazi Lilangeni (斯威士兰里兰吉尼)', importance: 170 },
+  TJS: { name: 'Tajikistani Somoni (塔吉克斯坦索莫尼)', importance: 171 },
+  TMT: { name: 'Turkmenistani Manat (土库曼斯坦马纳特)', importance: 172 },
+  TND: { name: 'Tunisian Dinar (突尼斯第纳尔)', importance: 173 },
+  TOP: { name: 'Tongan Paʻanga (汤加潘加)', importance: 174 },
+  TTD: { name: 'Trinidad and Tobago Dollar (特立尼达和多巴哥元)', importance: 175 },
+  TVD: { name: 'Tuvaluan Dollar (图瓦卢元)', importance: 176 },
+  TZS: { name: 'Tanzanian Shilling (坦桑尼亚先令)', importance: 177 },
+  UGX: { name: 'Ugandan Shilling (乌干达先令)', importance: 178 },
+  UYU: { name: 'Uruguayan Peso (乌拉圭比索)', importance: 179 },
+  UZS: { name: 'Uzbekistani Som (乌兹别克斯坦索姆)', importance: 180 },
+  VES: { name: 'Venezuelan Bolívar (委内瑞拉玻利瓦尔)', importance: 181 },
+  VUV: { name: 'Vanuatu Vatu (瓦努阿图瓦图)', importance: 182 },
+  WST: { name: 'Samoan Tala (萨摩亚塔拉)', importance: 183 },
+  XAF: { name: 'Central African CFA franc (中非法郎)', importance: 184 },
+  XCD: { name: 'East Caribbean Dollar (东加勒比元)', importance: 185 },
+  XDR: { name: 'Special Drawing Rights (特别提款权)', importance: 186 },
+  XPF: { name: 'CFP franc (太平洋法郎)', importance: 187 },
+  YER: { name: 'Yemeni Rial (也门里亚尔)', importance: 188 },
+  ZMW: { name: 'Zambian Kwacha (赞比亚克瓦查)', importance: 189 },
+  ZWL: { name: 'Zimbabwean Dollar (津巴布韦元)', importance: 190 },
 }
 
 function getCurrencyName(code: string) {
-  return currencyMap[code]?.name || code
+  if (currencyMap[code]) return currencyMap[code].name
+  try {
+    const en = new Intl.DisplayNames(['en'], { type: 'currency' }).of(code)
+    const zh = new Intl.DisplayNames(['zh'], { type: 'currency' }).of(code)
+    if (en && en !== code) {
+      return zh && zh !== code ? `${en} (${zh})` : en
+    }
+  } catch (e) {
+    // Fallback to code if Intl fails
+  }
+  return code
 }
 
 function getCurrencyImportance(code: string) {
