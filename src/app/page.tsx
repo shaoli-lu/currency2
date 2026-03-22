@@ -406,6 +406,9 @@ export default function CurrencyPage() {
         style={{ padding: '40px 20px', textAlign: 'center', cursor: 'pointer', position: 'relative' }}
         onClick={() => setPaused(!paused)}
       >
+        <div style={{ position: 'absolute', top: 15, left: 20, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+          {safeSlideIndex + 1} of {sortedMajor.length}
+        </div>
         <div style={{ position: 'absolute', top: 15, right: 20, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
           {paused ? '⏸ Paused' : '▶ Playing'}
         </div>
@@ -638,6 +641,17 @@ export default function CurrencyPage() {
           Crypto (加密货币)
         </button>
       </div>
+
+      {activeTab !== 3 && Object.keys(rates).length > 0 && (
+        <div className="glass-panel" style={{ padding: '15px', textAlign: 'center', marginBottom: '20px', borderBottom: '3px solid var(--accent)' }}>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>
+            Total Currencies (货币总数)
+          </div>
+          <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-main)' }}>
+            {search ? `${filteredCurrencies.length} / ${currencies.length}` : currencies.length}
+          </div>
+        </div>
+      )}
 
       <main>
         {activeTab === 0 && renderSlideshow()}
