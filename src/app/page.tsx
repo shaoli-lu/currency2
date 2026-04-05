@@ -253,6 +253,7 @@ export default function CurrencyPage() {
   const [search, setSearch] = useState('')
   const [paused, setPaused] = useState(false)
   const [slideIndex, setSlideIndex] = useState(0)
+  const [isHelpOpen, setIsHelpOpen] = useState(false)
 
   useEffect(() => {
     fetch('https://open.er-api.com/v6/latest/USD')
@@ -587,6 +588,14 @@ export default function CurrencyPage() {
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </div>
+        <button 
+          className="glass-button help-trigger"
+          onClick={() => setIsHelpOpen(true)}
+          title="Help & Instructions"
+          aria-label="Help"
+        >
+          ?
+        </button>
       </div>
       <header style={{ textAlign: 'center', marginBottom: '40px' }}>
         <img
@@ -601,7 +610,7 @@ export default function CurrencyPage() {
             objectFit: 'cover'
           }}
         />
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>World Currency (世界货币)</h1>
+        <h1 style={{ fontSize: '2.5rem', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>World Currency — Track Every Value Across the Globe (世界货币)</h1>
         <p style={{ fontSize: '1.2rem', color: 'var(--accent)', marginBottom: '5px' }}>
           {activeTab === 3 ? '1 Crypto to USD (1 加密货币兑美元)' : '1 USD to other currencies (1 美元兑其他货币)'}
         </p>
@@ -659,6 +668,45 @@ export default function CurrencyPage() {
         {activeTab === 2 && renderList(sortedLowValue)}
         {activeTab === 3 && renderCryptoList(filteredCrypto)}
       </main>
+
+      {isHelpOpen && (
+        <div className="modal-overlay" onClick={() => setIsHelpOpen(false)}>
+          <div className="glass-panel modal-content" onClick={e => e.stopPropagation()}>
+            <button className="help-close" onClick={() => setIsHelpOpen(false)}>×</button>
+            <h2 style={{ marginBottom: '20px', color: 'var(--text-main)', borderBottom: '1px solid var(--border-light)', paddingBottom: '10px' }}>
+              How to use World Currency 
+            </h2>
+            
+            <div className="help-item">
+              <h4><span>🌍</span> Slideshow (幻灯片)</h4>
+              <p style={{ color: 'var(--text-muted)' }}>Sit back and watch the world&apos;s currencies roll by. Click anywhere on the slideshow panel to pause or resume.</p>
+            </div>
+
+            <div className="help-item">
+              <h4><span>🔍</span> Smart Search (搜索)</h4>
+              <p style={{ color: 'var(--text-muted)' }}>Found in the top right. Type any country name, currency name, or 3-letter code (like USD, EUR, BTC) to find it instantly.</p>
+            </div>
+
+            <div className="help-item">
+              <h4><span>💎</span> Crypto Mode (加密货币)</h4>
+              <p style={{ color: 'var(--text-muted)' }}>Switch to the Crypto tab to see real-time price feeds for the top 250 cryptocurrencies by market cap.</p>
+            </div>
+
+            <div className="help-item">
+              <h4><span>✨</span> Interactive Fun (互动)</h4>
+              <p style={{ color: 'var(--text-muted)' }}>Click anywhere on the background to celebrate with a confetti burst! (Try it!)</p>
+            </div>
+
+            <button 
+              className="glass-button" 
+              style={{ width: '100%', marginTop: '10px' }}
+              onClick={() => setIsHelpOpen(false)}
+            >
+              Got it! (明白了)
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
