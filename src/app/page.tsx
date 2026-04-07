@@ -610,7 +610,7 @@ export default function CurrencyPage() {
             objectFit: 'cover'
           }}
         />
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>World Currency — Every Value on Earth (世界货币)</h1>
+        <h1 style={{ fontSize: '2.5rem', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>World Currencies (世界货币)</h1>
         <p style={{ fontSize: '1.2rem', color: 'var(--accent)', marginBottom: '5px' }}>
           {activeTab === 3 ? '1 Crypto to USD (1 加密货币兑美元)' : '1 USD to other currencies (1 美元兑其他货币)'}
         </p>
