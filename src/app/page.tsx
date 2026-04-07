@@ -509,11 +509,11 @@ export default function CurrencyPage() {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {/* Stats Section */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: '1fr 1fr', 
-          gap: '12px', 
-          marginBottom: '20px' 
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '12px',
+          marginBottom: '20px'
         }}>
           <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', borderBottom: '3px solid var(--accent)' }}>
             <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
@@ -572,23 +572,23 @@ export default function CurrencyPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="20" 
-            height="20" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="search-icon"
           >
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </div>
-        <button 
+        <button
           className="glass-button help-trigger"
           onClick={() => setIsHelpOpen(true)}
           title="Help & Instructions"
@@ -610,7 +610,7 @@ export default function CurrencyPage() {
             objectFit: 'cover'
           }}
         />
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>World Currency — Track Every Value Across the Globe (世界货币)</h1>
+        <h1 style={{ fontSize: '2.5rem', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>World Currency — Every Value on Earth (世界货币)</h1>
         <p style={{ fontSize: '1.2rem', color: 'var(--accent)', marginBottom: '5px' }}>
           {activeTab === 3 ? '1 Crypto to USD (1 加密货币兑美元)' : '1 USD to other currencies (1 美元兑其他货币)'}
         </p>
@@ -674,9 +674,9 @@ export default function CurrencyPage() {
           <div className="glass-panel modal-content" onClick={e => e.stopPropagation()}>
             <button className="help-close" onClick={() => setIsHelpOpen(false)}>×</button>
             <h2 style={{ marginBottom: '20px', color: 'var(--text-main)', borderBottom: '1px solid var(--border-light)', paddingBottom: '10px' }}>
-              How to use World Currency 
+              How to use World Currency
             </h2>
-            
+
             <div className="help-item">
               <h4><span>🌍</span> Slideshow (幻灯片)</h4>
               <p style={{ color: 'var(--text-muted)' }}>Sit back and watch the world&apos;s currencies roll by. Click anywhere on the slideshow panel to pause or resume.</p>
@@ -697,8 +697,8 @@ export default function CurrencyPage() {
               <p style={{ color: 'var(--text-muted)' }}>Click anywhere on the background to celebrate with a confetti burst! (Try it!)</p>
             </div>
 
-            <button 
-              className="glass-button" 
+            <button
+              className="glass-button"
               style={{ width: '100%', marginTop: '10px' }}
               onClick={() => setIsHelpOpen(false)}
             >
